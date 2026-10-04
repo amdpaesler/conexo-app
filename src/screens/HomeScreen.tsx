@@ -13,11 +13,11 @@ import {
 export function HomeScreen({ navigation }: any) {
   const [mostrarAlunos, setMostrarAlunos] = useState(false);
 
-  // Kaíque começa como aluno selecionado
-  const [alunoSelecionado, setAlunoSelecionado] = useState('Kaíque');
+  
+  const [alunoSelecionado, setAlunoSelecionado] = useState('Kaíque Paesler do Rosário');
 
   const selecionarKaique = () => {
-    setAlunoSelecionado('Kaíque');
+    setAlunoSelecionado('Kaíque Paesler do Rosário');
     setMostrarAlunos(false);
   };
 
@@ -70,13 +70,13 @@ export function HomeScreen({ navigation }: any) {
               <Pressable
                 style={[
                   styles.opcaoAluno,
-                  alunoSelecionado === 'Kaíque' &&
+                  alunoSelecionado === 'Kaíque Paesler do Rosário' &&
                     styles.alunoSelecionado,
                 ]}
                 onPress={selecionarKaique}
               >
                 <Text style={styles.nomeAluno}>
-                  Kaíque
+                  Kaíque Paesler do Rosário
                 </Text>
               </Pressable>
 
@@ -86,7 +86,7 @@ export function HomeScreen({ navigation }: any) {
                 onPress={selecionarAyra}
               >
                 <Text style={styles.nomeAluno}>
-                  Ayra
+                  Ayra Paesler do Rosário
                 </Text>
               </Pressable>
 
@@ -374,15 +374,15 @@ const styles = StyleSheet.create({
   // CENTRO DO MENU
   // =========================
 
-  centroMenu: {
+   centroMenu: {
     position: 'absolute',
 
-    width: 190,
-    height: 190,
+    width: 92,
+    height: 92,
 
-    borderRadius: 95,
+    borderRadius: 46,
 
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -402,8 +402,8 @@ const styles = StyleSheet.create({
   },
 
   logoCentral: {
-    width: 186,
-    height: 186,
+    width: 134,
+    height: 134,
   },
 
 });
