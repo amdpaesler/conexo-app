@@ -6,11 +6,11 @@ import {
   Pressable,
   SafeAreaView,
   ImageBackground,
-  Image,
   Alert,
 } from 'react-native';
 
 export function ProfileScreen({ navigation }: any) {
+
   const selecionarPerfil = (perfil: string) => {
     if (perfil === 'responsavel') {
       navigation.navigate('Login');
@@ -18,30 +18,28 @@ export function ProfileScreen({ navigation }: any) {
     }
 
     Alert.alert(
-      'Módulo indisponível',
-      'Este módulo não faz parte desta versão do aplicativo.'
+      'Aviso',
+      'Modalidade em desenvolvimento'
     );
   };
 
   return (
     <ImageBackground
-      source={require('../../assets/imagem-fundo.png')}
+      source={require('../../assets/fundo-apresentacao.png')}
       style={styles.background}
       resizeMode="cover"
     >
       <SafeAreaView style={styles.container}>
+
         <View style={styles.content}>
 
-          <Image
-            source={require('../../assets/logo-conexo.png')}
-            style={styles.logo}
-          />
-
+          {/* TÍTULO */}
           <Text style={styles.title}>
             Uma plataforma completa{'\n'}
             para a gestão escolar.
           </Text>
 
+          {/* DESCRIÇÃO */}
           <Text style={styles.description}>
             Centralize informações, organize processos{'\n'}
             e fortaleça a comunicação com famílias{'\n'}
@@ -49,10 +47,14 @@ export function ProfileScreen({ navigation }: any) {
             digital seguro e eficiente.
           </Text>
 
+          {/* BOTÕES */}
           <View style={styles.buttonsContainer}>
 
             <Pressable
-              style={styles.button}
+              style={({ pressed }) => [
+                styles.button,
+                pressed && styles.buttonPressed,
+              ]}
               onPress={() => selecionarPerfil('responsavel')}
             >
               <Text style={styles.buttonText}>
@@ -61,7 +63,10 @@ export function ProfileScreen({ navigation }: any) {
             </Pressable>
 
             <Pressable
-              style={styles.button}
+              style={({ pressed }) => [
+                styles.button,
+                pressed && styles.buttonPressed,
+              ]}
               onPress={() => selecionarPerfil('instituicao')}
             >
               <Text style={styles.buttonText}>
@@ -70,7 +75,10 @@ export function ProfileScreen({ navigation }: any) {
             </Pressable>
 
             <Pressable
-              style={styles.button}
+              style={({ pressed }) => [
+                styles.button,
+                pressed && styles.buttonPressed,
+              ]}
               onPress={() => selecionarPerfil('professor')}
             >
               <Text style={styles.buttonText}>
@@ -79,7 +87,10 @@ export function ProfileScreen({ navigation }: any) {
             </Pressable>
 
             <Pressable
-              style={styles.button}
+              style={({ pressed }) => [
+                styles.button,
+                pressed && styles.buttonPressed,
+              ]}
               onPress={() => selecionarPerfil('administrativo')}
             >
               <Text style={styles.buttonText}>
@@ -90,14 +101,22 @@ export function ProfileScreen({ navigation }: any) {
           </View>
 
         </View>
+
       </SafeAreaView>
     </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+
+  /* =========================
+     FUNDO
+     ========================= */
+
   background: {
     flex: 1,
+    width: '100%',
+    height: '100%',
   },
 
   container: {
@@ -108,52 +127,99 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 28,
-    paddingTop: 45,
+
+    /*
+     * O logo e o nome "Conexo" agora fazem
+     * parte da própria imagem de fundo.
+     *
+     * Por isso deixamos espaço no topo
+     * antes de começar o título.
+     */
+    paddingTop: 105,
   },
 
-  logo: {
-    width: 95,
-    height: 75,
-    resizeMode: 'contain',
-    marginBottom: 22,
-  },
+
+  /* =========================
+     TÍTULO
+     ========================= */
 
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
     textAlign: 'center',
-    lineHeight: 27,
+    lineHeight: 25,
     color: '#111111',
-    marginBottom: 18,
+
+    marginBottom: 24,
   },
+
+
+  /* =========================
+     DESCRIÇÃO
+     ========================= */
 
   description: {
-    fontSize: 13,
+    fontSize: 12,
+    fontWeight: '400',
     textAlign: 'center',
-    lineHeight: 19,
-    color: '#333333',
+    lineHeight: 16,
+    color: '#222222',
   },
 
+
+  /* =========================
+     BOTÕES
+     ========================= */
+
   buttonsContainer: {
+    marginTop: 105,
+
     width: '100%',
-    marginTop: 75,
-    gap: 12,
+    alignItems: 'center',
+
+    gap: 10,
   },
 
   button: {
-    width: '100%',
-    height: 48,
+    width: '68%',
+    maxWidth: 250,
+
+    height: 43,
+
+    backgroundColor: 'rgba(255,255,255,0.94)',
+
     borderWidth: 1,
-    borderColor: '#BBBBBB',
+    borderColor: '#C8C8C8',
+
     borderRadius: 4,
+
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.90)',
+
+    elevation: 2,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+  },
+
+  buttonPressed: {
+    opacity: 0.65,
+    transform: [
+      {
+        scale: 0.98,
+      },
+    ],
   },
 
   buttonText: {
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: '400',
     color: '#111111',
   },
+
 });
