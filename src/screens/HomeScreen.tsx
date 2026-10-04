@@ -13,13 +13,11 @@ import {
 export function HomeScreen({ navigation }: any) {
   const [mostrarAlunos, setMostrarAlunos] = useState(false);
 
-  // Kaíque já começa selecionado
-  const [alunoSelecionado, setAlunoSelecionado] = useState(
-    'Kaíque Paesler do Rosário'
-  );
+  // Kaíque começa como aluno selecionado
+  const [alunoSelecionado, setAlunoSelecionado] = useState('Kaíque');
 
   const selecionarKaique = () => {
-    setAlunoSelecionado('Kaíque Paesler do Rosário');
+    setAlunoSelecionado('Kaíque');
     setMostrarAlunos(false);
   };
 
@@ -44,59 +42,64 @@ export function HomeScreen({ navigation }: any) {
     >
       <SafeAreaView style={styles.container}>
 
-        {/* SELEÇÃO DE ALUNO */}
+        {/* =========================
+            SELEÇÃO DE ALUNO
+        ========================= */}
+
         <View style={styles.alunoArea}>
 
+          {/* BOTÃO ALUNO(A) */}
           <Pressable
             style={styles.alunoTitulo}
             onPress={() => setMostrarAlunos(!mostrarAlunos)}
           >
-            <Text style={styles.alunoTituloTexto}>Aluno(a)</Text>
-          </Pressable>
-
-          {/* ALUNO SELECIONADO */}
-          <Pressable
-            style={[
-              styles.alunoSelecionado,
-              mostrarAlunos && styles.alunoSelecionadoAberto,
-            ]}
-            onPress={() => setMostrarAlunos(!mostrarAlunos)}
-          >
-            <Text style={styles.nomeAluno}>{alunoSelecionado}</Text>
+            <Text style={styles.alunoTituloTexto}>
+              Aluno(a)
+            </Text>
 
             <Text style={styles.seta}>
               {mostrarAlunos ? '▲' : '▼'}
             </Text>
           </Pressable>
 
-          {/* OPÇÕES */}
+          {/* LISTA DE ALUNOS */}
           {mostrarAlunos && (
             <View style={styles.listaAlunos}>
 
+              {/* KAÍQUE */}
               <Pressable
-                style={styles.opcaoAluno}
+                style={[
+                  styles.opcaoAluno,
+                  alunoSelecionado === 'Kaíque' &&
+                    styles.alunoSelecionado,
+                ]}
                 onPress={selecionarKaique}
               >
                 <Text style={styles.nomeAluno}>
-                  Kaíque Paesler do Rosário
+                  Kaíque
                 </Text>
               </Pressable>
 
+              {/* AYRA */}
               <Pressable
                 style={styles.opcaoAluno}
                 onPress={selecionarAyra}
               >
                 <Text style={styles.nomeAluno}>
-                  Ayra Paesler do Rosário
+                  Ayra
                 </Text>
               </Pressable>
 
             </View>
           )}
+
         </View>
 
 
-        {/* MENU CIRCULAR */}
+        {/* =========================
+            MENU CIRCULAR
+        ========================= */}
+
         <View style={styles.menuWrapper}>
 
           <View style={styles.menuCircular}>
@@ -106,7 +109,10 @@ export function HomeScreen({ navigation }: any) {
 
               {/* COMUNICAÇÃO */}
               <Pressable
-                style={[styles.quadrante, styles.comunicacao]}
+                style={[
+                  styles.quadrante,
+                  styles.comunicacao,
+                ]}
                 onPress={abrirComunicacao}
               >
                 <Image
@@ -116,9 +122,13 @@ export function HomeScreen({ navigation }: any) {
                 />
               </Pressable>
 
+
               {/* PEDAGÓGICO */}
               <Pressable
-                style={[styles.quadrante, styles.pedagogico]}
+                style={[
+                  styles.quadrante,
+                  styles.pedagogico,
+                ]}
                 onPress={modalidadeEmDesenvolvimento}
               >
                 <Image
@@ -136,7 +146,10 @@ export function HomeScreen({ navigation }: any) {
 
               {/* SAÚDE */}
               <Pressable
-                style={[styles.quadrante, styles.saude]}
+                style={[
+                  styles.quadrante,
+                  styles.saude,
+                ]}
                 onPress={modalidadeEmDesenvolvimento}
               >
                 <Image
@@ -146,9 +159,13 @@ export function HomeScreen({ navigation }: any) {
                 />
               </Pressable>
 
+
               {/* SECRETARIA */}
               <Pressable
-                style={[styles.quadrante, styles.secretaria]}
+                style={[
+                  styles.quadrante,
+                  styles.secretaria,
+                ]}
                 onPress={modalidadeEmDesenvolvimento}
               >
                 <Image
@@ -163,7 +180,10 @@ export function HomeScreen({ navigation }: any) {
           </View>
 
 
-          {/* BOTÃO / LOGO CENTRAL */}
+          {/* =========================
+              LOGO CENTRAL
+          ========================= */}
+
           <View style={styles.centroMenu}>
             <Image
               source={require('../../assets/logo-conexo.png')}
@@ -182,6 +202,10 @@ export function HomeScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
 
+  // =========================
+  // TELA
+  // =========================
+
   background: {
     flex: 1,
   },
@@ -193,7 +217,7 @@ const styles = StyleSheet.create({
 
 
   // =========================
-  // ÁREA DO ALUNO
+  // SELEÇÃO DE ALUNO
   // =========================
 
   alunoArea: {
@@ -205,10 +229,13 @@ const styles = StyleSheet.create({
 
   alunoTitulo: {
     width: '94%',
-    height: 50,
+    height: 55,
+
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.92)',
+
+    backgroundColor: 'rgba(255,255,255,0.95)',
+
     borderWidth: 1,
     borderColor: '#dedede',
   },
@@ -218,20 +245,40 @@ const styles = StyleSheet.create({
     color: '#111',
   },
 
-  alunoSelecionado: {
-    width: '94%',
-    height: 42,
-    backgroundColor: 'rgba(255,255,255,0.95)',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderColor: '#dedede',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
+  seta: {
+    position: 'absolute',
+    right: 20,
+
+    fontSize: 13,
+    color: '#555',
   },
 
-  alunoSelecionadoAberto: {
-    borderBottomWidth: 0,
+  listaAlunos: {
+    width: '94%',
+
+    backgroundColor: '#ffffff',
+
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+
+    borderColor: '#dedede',
+  },
+
+  opcaoAluno: {
+    height: 43,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderTopWidth: 1,
+    borderTopColor: '#ededed',
+
+    backgroundColor: '#ffffff',
+  },
+
+  alunoSelecionado: {
+    backgroundColor: '#f5f5f5',
   },
 
   nomeAluno: {
@@ -240,46 +287,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  seta: {
-    position: 'absolute',
-    right: 18,
-    fontSize: 13,
-    color: '#555',
-  },
-
-  listaAlunos: {
-    width: '94%',
-    backgroundColor: '#fff',
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#dedede',
-  },
-
-  opcaoAluno: {
-    height: 42,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#ededed',
-  },
-
 
   // =========================
   // MENU CIRCULAR
   // =========================
 
   menuWrapper: {
-    width: 320,
-    height: 320,
+    width: 330,
+    height: 330,
+
     marginTop: 85,
+
     alignItems: 'center',
     justifyContent: 'center',
 
-    // sombra Android
     elevation: 7,
 
-    // sombra iOS
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -297,7 +320,7 @@ const styles = StyleSheet.create({
 
     overflow: 'hidden',
 
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
 
     borderWidth: 7,
     borderColor: '#e4e4e4',
@@ -310,13 +333,14 @@ const styles = StyleSheet.create({
 
   quadrante: {
     flex: 1,
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
 
   // =========================
-  // CORES DOS QUADRANTES
+  // CORES DOS BOTÕES
   // =========================
 
   comunicacao: {
@@ -353,12 +377,12 @@ const styles = StyleSheet.create({
   centroMenu: {
     position: 'absolute',
 
-    width: 92,
-    height: 92,
+    width: 190,
+    height: 190,
 
-    borderRadius: 46,
+    borderRadius: 95,
 
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -378,8 +402,8 @@ const styles = StyleSheet.create({
   },
 
   logoCentral: {
-    width: 62,
-    height: 62,
+    width: 186,
+    height: 186,
   },
 
 });
