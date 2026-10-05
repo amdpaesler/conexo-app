@@ -19,16 +19,23 @@ type Props = BottomTabScreenProps<RootTabParamList, 'Login'>;
 export function LoginScreen({ navigation }: Props) {
   const [cpf, setCpf] = useState('');
   const [senha, setSenha] = useState('');
+  const [erro, setErro] = useState('');
 
   async function handleEnterPress() {
+  if (cpf === '123456789000' && senha === 'teste123') {
+    setErro('');
+
     await saveSession({
-      cpf: cpf || '123456789000',
+      cpf,
       profile: 'responsavel',
       loggedAt: new Date().toISOString(),
     });
 
     navigation.navigate('Home');
+  } else {
+    setErro('Usuário ou senha inválidos.');
   }
+}
 
   return (
     <View style={styles.container}>
@@ -72,6 +79,8 @@ export function LoginScreen({ navigation }: Props) {
               placeholderTextColor="#555555"
               secureTextEntry
             />
+
+            {erro !== '' && <Text style={styles.error}>{erro}</Text>}
 
             <Pressable style={styles.button} onPress={handleEnterPress}>
               <Text style={styles.buttonText}>ENTRAR</Text>
@@ -170,6 +179,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#111111',
+  },
+
+  error: {
+    color: 'red',
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 10,
   },
 
   forgotPassword: {
