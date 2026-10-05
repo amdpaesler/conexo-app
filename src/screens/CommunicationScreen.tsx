@@ -354,15 +354,10 @@ export function CommunicationScreen() {
         {mensagensAberto && (
 
           <KeyboardAvoidingView
-            style={styles.areaMensagens}
-            behavior={
-              Platform.OS === 'ios'
-                ? 'padding'
-                : undefined
-            }
-          >
-
-
+  style={styles.areaMensagens}
+  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  keyboardVerticalOffset={0}
+>
             {/* =========================
                 CONTATOS
             ========================= */}
@@ -571,15 +566,13 @@ export function CommunicationScreen() {
 
 
                   <Pressable
-                    style={styles.botaoEnviar}
-                    onPress={enviarMensagem}
-                  >
-
-                    <Text style={styles.textoEnviar}>
-                      ➤
-                    </Text>
-
-                  </Pressable>
+  style={styles.botaoEnviar}
+  onPress={enviarMensagem}
+>
+  <Text style={styles.textoEnviar}>
+    ➤
+  </Text>
+</Pressable>
 
                 </View>
 
