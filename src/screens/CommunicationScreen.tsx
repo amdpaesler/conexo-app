@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   View,
@@ -15,6 +15,9 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 // ==============================
 // TIPOS
@@ -29,6 +32,8 @@ type Mensagem = {
 type Conversas = {
   [key: string]: Mensagem[];
 };
+
+const STORAGE_KEY = '@conexo_conversas';
 
 
 // ==============================
@@ -82,6 +87,8 @@ export function CommunicationScreen() {
 
   const [textoMensagem, setTextoMensagem] = useState('');
 
+  const [dadosCarregados, setDadosCarregados] = useState(false);
+
 
   // Conversas provisórias
   const [conversas, setConversas] = useState<Conversas>({
@@ -117,6 +124,55 @@ export function CommunicationScreen() {
     professor4: [],
 
   });
+
+// ==============================
+// CARREGAR CONVERSAS SALVAS
+// ==============================
+
+useEffect(() => {
+  const carregarConversas = async () => {
+    try {
+      const conversasSalvas = await AsyncStorage.getItem(STORAGE_KEY);
+
+      if (conversasSalvas) {
+        const conversasConvertidas: Conversas =
+          JSON.parse(conversasSalvas);
+
+        setConversas(conversasConvertidas);
+      }
+    } catch (erro) {
+      console.log('Erro ao carregar conversas:', erro);
+    } finally {
+      setDadosCarregados(true);
+    }
+  };
+
+  carregarConversas();
+}, []);
+
+// ==============================
+// SALVAR CONVERSAS
+// ==============================
+
+useEffect(() => {
+  if (!dadosCarregados) {
+    return;
+  }
+
+  const salvarConversas = async () => {
+    try {
+      await AsyncStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(conversas)
+      );
+    } catch (erro) {
+      console.log('Erro ao salvar conversas:', erro);
+    }
+  };
+
+  salvarConversas();
+}, [conversas, dadosCarregados]);
+
 
 
   // ==============================
@@ -462,10 +518,11 @@ export function CommunicationScreen() {
                 {/* HISTÓRICO */}
 
                 <ScrollView
-                  style={styles.listaMensagens}
-                  contentContainerStyle={styles.listaMensagensConteudo}
-                  showsVerticalScrollIndicator={false}
-                >
+  style={styles.listaMensagens}
+  contentContainerStyle={styles.listaMensagensConteudo}
+  showsVerticalScrollIndicator={false}
+  keyboardShouldPersistTaps="handled"
+>
 
                   {mensagensAtuais.length === 0 && (
 
